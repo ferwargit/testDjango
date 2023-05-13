@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include # importo include
 
 urlpatterns = [
-    path('adminsite/', admin.site.urls),
+    path('admin/doc/', include('django.contrib.admindocs.urls')), # activo la documentación del administrador de Django
+    path('admin/', admin.site.urls),
     path('', include('newapp.urls')), # ruta para newapp que referencia a '' (raiz/index)
 ]

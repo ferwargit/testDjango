@@ -102,6 +102,12 @@ Se crea el archivo `requirements.txt` con las dependencias del proyecto.
     sqlparse==0.4.4
     tzdata==2023.3
 
+## 6.1.-Ejecutar pip install -r requirements.txt (20)
+
+El comando pip install -r requirements.txt se utiliza para instalar todas las dependencias de tu proyecto desde el archivo requirements.txt. Es una buena práctica ejecutar este comando después de clonar un proyecto de un repositorio remoto o después de crear un nuevo entorno virtual para tu proyecto.
+
+    (venv) pip install -r requirements.txt
+
 ## 7.-Crear un proyecto Django
 
     django-admin startproject core .
@@ -306,3 +312,493 @@ from django.http import HttpResponse
 def home(request):
     return HttpResponse('Hello, World!')
 ```
+## 18.-En newapp creo la carpeta **templates** y dentro de ella creo un archivo **index.html**
+
+En la carpeta **templates** creo un archivo **index.html** y agrego el siguiente código
+
+```html
+<html>
+  <body>
+    Hello World...
+  </body>
+</html>
+```
+
+## 19.-En el archivo **views.py** de newapp importo **render**
+
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+
+# Create your views here.
+def home(request):
+    # return HttpResponse('Hello, World!')
+    return render(request, 'index.html')
+```
+
+## 20.-Escribir comentarios en Django
+
+```python
+# Esto es un comentario de una sola línea
+
+# Esto es un
+# comentario de varias
+# líneas
+```
+
+```python
+""" 
+Esto es un comentario    
+de varias líneas
+"""
+```
+```python
+# Complex section of code
+# TODOs or notes for code not yet written
+# Document your code - inline comments
+# functions/methods/modules/classes
+```	
+## 21.-PEP 8
+
+PEP 8 es una guía de estilo para el código Python. Fue escrito en 2001 por Guido van Rossum, Barry Warsaw y Nick Coghlan. El nombre PEP 8 es un acrónimo que significa Python Enhancement Proposal y el número asignado a este documento.
+
+PEP8 incluye reglas y recomendaciones para la indentación, longitud de línea, nombres de variables y funciones, comentarios, entre otras cosas. El objetivo de PEP8 es hacer que el código sea fácil de leer y entender para otros desarrolladores, lo que puede ayudar a mejorar la colaboración y la mantenibilidad del código.
+
+Hay herramientas disponibles que pueden ayudar a verificar que el código sigue las convenciones de PEP8, como Flake8 y PyLint.
+
+[PEP8](https://peps.python.org/pep-0008/)
+
+- Es prioritario mantener los comentarios actualizados cuando se realizan cambios en el código. Los comentarios deben ser claros y concisos, y deben explicar el código de manera que sea fácil de entender para otros desarrolladores.
+- La primera palabra debe ir en mayúscula y la oración debe finalizar con un punto.
+- Para los comentarios en línea, utiliza el símbolo # seguido de un espacio, de manera similar a los comentarios en bloque.
+
+## 22.-Comentarios Docstring
+
+Los comentarios Docstring son una forma de documentar el código Python. Estos comentarios se utilizan para describir el propósito de una función, método, clase o módulo, y también pueden utilizarse para proporcionar información sobre los parámetros y valores de retorno de una función o método.
+
+Los comentarios Docstring se escriben entre comillas triples, y se colocan en la primera línea después de la definición de una función, método, clase o módulo. También pueden colocarse en la segunda línea, después de la línea de importación de un módulo.
+
+```python
+def homepage(request):
+    """
+    Function responds to website root HHTP request
+
+    Returns index.html template - no db data returned
+    """
+
+    return render(request, 'index.html')
+```
+```python
+def homepage(request):
+    """
+    Vista para renderizar la página principal (home) del sitio web.
+
+    Parámetros:
+    ----------
+    request: HttpRequest
+        Objeto HttpRequest que representa la solicitud HTTP.
+
+    Retorna:
+    -------
+    render
+        Objeto render que renderiza la plantilla HTML 'index.html' con la información requerida.
+    """
+    return render(request, 'index.html')
+```
+## 23.-Activando la documentación del administrador de Django
+
+[Documentación del administrador de Django](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/admindocs/)
+
+![Activar Documentacion](img/003.-ActivarDocumentacion.jpg)
+
+- En el archivo **settings.py** de la carpeta **core** agrego la siguiente línea de código
+
+```python
+# Application definition
+
+    INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.admindocs', # activo la documentación del administrador de Django
+    'newapp',
+]
+```	
+
+- En el archivo **urls.py** de la carpeta **core** agrego la siguiente línea de código
+
+```python
+from django.contrib import admin
+from django.urls import path, include # importo include
+
+urlpatterns = [
+    path('admin/doc/', include('django.contrib.admindocs.urls')), # activo la documentación del administrador de Django
+    path('adminsite/', admin.site.urls),
+    path('', include('newapp.urls')),
+]
+```
+- Voy a [Pypi.org](https://pypi.org/) y en el buscador escribo `docutils`
+
+![docutils](img/004.-docutils.jpg)
+
+Copio el comando de instalación e instalo
+
+```
+pip install docutils
+```
+```
+(venv-3.10.11) D:\....aves-testDjango\testDjango>pip install docutils
+Collecting docutils
+  Downloading docutils-0.20-py3-none-any.whl (577 kB)
+     ---------------------------------------- 577.9/577.9 kB 1.6 MB/s eta 0:00:00
+Installing collected packages: docutils
+Successfully installed docutils-0.20
+
+(venv-3.10.11) D:\....aves-testDjango\testDjango>
+```
+
+- En el archivo **settings.py** de la carpeta **core** agrego la siguiente línea de código
+
+```python
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.admindocs.middleware.XViewMiddleware', # activo la documentación del administrador de Django
+]
+```
+
+## 24.-Creando un superusuario admin/admin
+
+```
+python manage.py createsuperuser
+``` 
+
+## 25.-Documentación del administrador de Django
+
+![Documentation](img/005.-Documentation.jpg)
+
+## 26.-Concepto de Variable (30)
+
+• Contenedores para almacenar valores de datos  
+• Nombre simbólico, referencia a un objeto  
+• Ubicación de memoria reservada para almacenar valores  
+
+![Variables](img/006.-Variable.jpg)
+
+La función `home` en el archivo `views.py` es una función de vista de Django que maneja una solicitud HTTP para la ruta raíz del sitio web y devuelve una plantilla `index.html` con datos adicionales como contexto.
+
+```python
+def home(request):
+    """
+    Function responds to website root HHTP request
+
+    Returns index.html template - no db data returned
+    """
+
+    name = "Zander"
+    age = 27
+
+    return render(request, 'index.html', {'name': name, 'age': age})
+```
+
+Primero, la función toma un argumento `request`, que es un objeto `HttpRequest` de Django. Este objeto contiene información sobre la solicitud del cliente, como la URL solicitada, los encabezados HTTP y cualquier dato enviado en la solicitud [Source 1](https://docs.djangoproject.com/en/4.2/intro/tutorial03/).
+
+Luego, la función define dos variables, `name` y `age`, que se utilizarán para proporcionar datos al contexto de la plantilla. En este caso, se utilizan valores estáticos, pero en una aplicación real, estos datos podrían provenir de una base de datos o de otras fuentes [Source 2](https://vegibit.com/django-render-function/).
+
+Finalmente, la función utiliza la función `render` de Django para devolver un objeto `HttpResponse` que contiene la plantilla `index.html` procesada con el contexto proporcionado. La función `render` toma tres argumentos:
+
+1. `request`: El objeto `HttpRequest` mencionado anteriormente.
+2. `'index.html'`: El nombre de la plantilla que se va a utilizar. Django buscará esta plantilla en la carpeta `templates` del proyecto o de las aplicaciones instaladas [Source 3](https://stackoverflow.com/questions/61732458/render-a-html-file-in-django).
+3. `{'name': name, 'age': age}`: Un diccionario que contiene el contexto para la plantilla. En este caso, el contexto incluye las variables `name` y `age` que se definieron previamente.
+
+La función `render` devuelve un objeto `HttpResponse` con el contenido de la plantilla procesada, que se envía de vuelta al cliente como respuesta a su solicitud [Source 1](https://docs.djangoproject.com/en/4.2/intro/tutorial03/).
+
+En resumen, la función `home` en `views.py` maneja una solicitud HTTP para la ruta raíz del sitio web, crea un contexto con datos estáticos y devuelve una plantilla `index.html` procesada con dicho contexto.
+
+El archivo `index.html` es una plantilla de Django que utiliza el lenguaje de plantillas de Django (Django Template Language, DTL) para procesar datos y generar HTML dinámico. En este caso, la plantilla es bastante simple:
+
+```html
+<html>
+  <body>
+    Hello {{ name }}, my age is {{ age }}.
+  </body>
+</html>
+```
+
+La plantilla está compuesta por etiquetas HTML básicas, como `<html>` y `<body>`. Lo más importante en esta plantilla son las expresiones entre llaves dobles `{{ }}`, que son marcadores de posición para variables de contexto proporcionadas por la función de vista en `views.py` [Source 1](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Home_page).
+
+En este caso, la plantilla utiliza dos variables de contexto: `name` y `age`. Estas variables se reemplazarán por sus valores correspondientes cuando Django procese la plantilla. En el ejemplo de la función `home` en `views.py`, `name` es "Zander" y `age` es 27.
+
+Cuando Django procesa esta plantilla con el contexto proporcionado, el resultado será el siguiente HTML:
+
+```html
+<html>
+  <body>
+    Hello Zander, my age is 27.
+  </body>
+</html>
+```
+
+Este HTML se envía como respuesta al cliente, que lo renderiza en el navegador.
+
+En resumen, `index.html` es una plantilla de Django que utiliza variables de contexto para generar HTML dinámico. En este caso, las variables `name` y `age` provienen de la función de vista `home` en `views.py` y se utilizan para personalizar el contenido de la página.
+
+## 27.-Built-in Functions
+
+- [Built-in Functions](https://docs.python.org/3/library/functions.html)
+
+Cuando ejecutas el comando `print(request)` dentro de la función `home`, obtienes como respuesta en la consola `<WSGIRequest: GET '/'>`. Esto es una representación en cadena de caracteres del objeto `HttpRequest` que recibió la función de vista `home` [Source 1](https://stackoverflow.com/questions/59214865/request-method-and-request-get-in-django).
+
+`<WSGIRequest: GET '/'>` nos proporciona información sobre la solicitud HTTP recibida:
+
+1. `WSGIRequest`: Indica que la solicitud es un objeto `WSGIRequest`, que es una subclase de `HttpRequest` específica para aplicaciones Django que se ejecutan bajo el protocolo WSGI (Web Server Gateway Interface) [Source 3](https://docs.djangoproject.com/en/4.2/ref/request-response/#wsgirequest-objects).
+
+2. `GET`: Es el método HTTP utilizado en la solicitud. En este caso, se trata de una solicitud GET, que es típicamente utilizada para solicitar datos de un recurso específico [Source 4](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET).
+
+3. `'/'`: Es la ruta o URL solicitada en la solicitud HTTP. En este caso, la ruta es la raíz del sitio web (representada por la barra diagonal `/`).
+
+La representación en cadena de caracteres del objeto `HttpRequest` es útil para depurar y entender cómo están llegando las solicitudes a las funciones de vista en Django. Si deseas acceder a datos específicos de la solicitud, como encabezados, parámetros GET o datos POST, puedes hacerlo utilizando las propiedades y métodos del objeto `HttpRequest`, como `request.method`, `request.GET`, `request.POST`, entre otros [Source 1](https://stackoverflow.com/questions/59214865/request-method-and-request-get-in-django), [Source 4](https://stackoverflow.com/questions/72788843/how-to-print-out-request-body-data-in-django).
+
+Cuando ejecutas el siguiente código dentro de la función `home`:
+
+```python
+print("method:", request.method)
+print("GET:", request.GET)
+print("POST:", request.POST)
+```
+
+Obtienes la siguiente respuesta:
+
+```
+method: GET
+GET: <QueryDict: {}>
+POST: <QueryDict: {}>
+```
+
+Esta respuesta nos proporciona información adicional sobre la solicitud HTTP recibida:
+
+1. `method: GET`: Como se mencionó anteriormente, el método HTTP utilizado en la solicitud es GET. La función `request.method` devuelve el método de la solicitud como una cadena de caracteres [Source 1](https://stackoverflow.com/questions/59214865/request-method-and-request-get-in-django).
+
+2. `GET: <QueryDict: {}>`: La función `request.GET` devuelve un objeto `QueryDict` que contiene los parámetros de consulta enviados en la solicitud GET [Source 3](https://stackoverflow.com/questions/58483020/convert-request-get-and-request-post-data-to-dictionary). En este caso, el objeto `QueryDict` está vacío, lo que indica que no se enviaron parámetros de consulta en la solicitud.
+
+3. `POST: <QueryDict: {}>`: La función `request.POST` devuelve un objeto `QueryDict` que contiene los datos enviados en el cuerpo de una solicitud POST [Source 1](https://stackoverflow.com/questions/10023213/extracting-items-out-of-a-querydict). En este caso, el objeto `QueryDict` también está vacío, lo que es esperado ya que la solicitud es de tipo GET y no POST.
+
+Un `QueryDict` es similar a un diccionario de Python, pero está diseñado para manejar claves con múltiples valores. Puedes acceder a los valores de un `QueryDict` utilizando el método `get()`, por ejemplo, `request.GET.get('parametro')` para obtener el valor del parámetro 'parametro' en la solicitud GET [Source 1](https://stackoverflow.com/questions/10023213/extracting-items-out-of-a-querydict).
+
+En resumen, el código que ejecutaste imprime información adicional sobre la solicitud HTTP recibida, incluido el método de la solicitud (GET), los parámetros de consulta (vacíos en este caso) y los datos POST (también vacíos, ya que la solicitud es de tipo GET).
+
+## 28.-Tipos de Datos
+
+- [Built-in Types](https://docs.python.org/3/library/stdtypes.html)
+
+![Tipos de Datos](./img/007.-DataTypes.jpg)
+
+Los tipos de datos se definen por los valores que pueden
+llevar.
+
+![String](./img/009.-String.jpg)
+![Integer](./img/010.-Integer.jpg)
+![Float](./img/011.-Float.jpg)
+
+Los tipos de datos tienen operaciones definidas que pueden
+realizarse sobre ellos.
+
+
+![Python-Data-Types](./img/008.-PythonDataTypes.jpg)
+
+## 29.-Conversión de tipos de datos específicos
+
+- [Built-in Types](https://docs.python.org/3/library/stdtypes.html)
+
+```python	
+a = int(1)
+b = str("hello")
+c = bool(True)
+d = float(1.0)
+
+print(type(a))
+print(type(b))
+print(type(c))
+print(type(d))
+```
+
+    <class 'int'>
+    <class 'str'>
+    <class 'bool'>
+    <class 'float'>
+
+## 30.-Introducción a los tipos de datos del modelo de Django
+
+- [Django Model Field Types](https://docs.djangoproject.com/en/3.2/ref/models/fields/#model-field-types)
+
+![Django Model Field Types](./img/012.-ModeloTipoDatos.jpg)
+
+## 31.-Creación de un modelo de Django
+
+- [Django Models](https://docs.djangoproject.com/en/3.2/topics/db/models/)
+
+En el archivo `models.py`, tienes la siguiente definición de modelo:
+
+```python
+from django.db import models
+
+class Customer(models.Model):
+    name = models.CharField(max_length=25)
+    age = models.IntegerField()
+    mobile = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+```
+
+Esta definición crea un modelo `Customer` que representa a un cliente en tu aplicación Django. El modelo `Customer` tiene tres campos:
+
+1. `name`: Un campo de tipo `CharField` con una longitud máxima de 25 caracteres. Este campo representa el nombre del cliente [Source 3](https://www.tutorialspoint.com/django/django_models.htm).
+
+2. `age`: Un campo de tipo `IntegerField`, que representa la edad del cliente.
+
+3. `mobile`: Otro campo de tipo `IntegerField`, que representa el número de teléfono móvil del cliente.
+
+Además, se define un método especial `__str__` para el modelo `Customer`. Este método se utiliza para proporcionar una representación en cadena de caracteres del objeto `Customer`. En este caso, la representación en cadena de caracteres del objeto `Customer` será el valor del campo `name` [Source 3](https://www.tutorialspoint.com/django/django_models.htm).
+
+Cuando Django crea la tabla de la base de datos para este modelo, utilizará el nombre de la aplicación y el nombre del modelo para generar el nombre de la tabla (por ejemplo, `appname_customer`). Si deseas personalizar el nombre de la tabla, puedes agregar una clase `Meta` dentro de la definición del modelo y establecer el atributo `db_table` con el nombre de la tabla deseado [Source 3](https://www.tutorialspoint.com/django/django_models.htm).
+
+Una vez que hayas definido el modelo, debes ejecutar el siguiente comando para que Django genere la tabla de la base de datos correspondiente:
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Esto creará las migraciones necesarias y aplicará los cambios a la base de datos. Después de esto, podrás utilizar el modelo `Customer` para realizar consultas y operaciones en la base de datos a través del ORM de Django.
+
+```console
+(venv-3.10.11) D:\....aves-testDjango\testDjango>python manage.py makemigrations
+←[36;1mMigrations for 'newapp':←[0m
+  ←[1mnewapp\migrations\0001_initial.py←[0m
+    - Create model Customer
+
+(venv-3.10.11) D:\....aves-testDjango\testDjango>
+```
+Se genera el archivo 0001_initial.py
+
+```python
+# Generated by Django 4.2.1 on 2023-05-13 04:01
+
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Customer',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=25)),
+                ('age', models.IntegerField()),
+                ('mobile', models.IntegerField()),
+            ],
+        ),
+    ]
+```
+
+Luego ejecuto el comando `python manage.py migrate`
+
+```console
+(venv-3.10.11) D:\....aves-testDjango\testDjango>python manage.py migrate
+←[36;1mOperations to perform:←[0m
+←[1m  Apply all migrations: ←[0madmin, auth, contenttypes, newapp, sessions
+←[36;1mRunning migrations:←[0m
+  Applying newapp.0001_initial...←[32;1m OK←[0m
+
+(venv-3.10.11) D:\....aves-testDjango\testDjango>
+```
+
+<!-- Para visualizar la tabla creada en la base de datos, ejecuto el comando `python manage.py dbshell` -->
+
+Con la extension sqlite3 de VSCode, visualizo la tabla creada
+Me posiciono en la carpeta `db.sqlite3` y la abro con la extension sqlite3 de VSCode
+con el botón derecho del mouse, selecciono la opción `Open Database`
+
+![Tabla creada](./img/013.-db-sqlite3.jpg)
+
+![SQLITE EXPLORADOR](./img/014.-SQLITE-Explorer.jpg)
+
+## 32.-Creando un nuevo Django admin user admin2/admin2
+
+- [Django Admin](https://docs.djangoproject.com/en/3.2/ref/contrib/admin/)
+
+El administrador de Django es una aplicación que se incluye automáticamente con cada proyecto de Django. Proporciona una interfaz gráfica para trabajar con datos de su aplicación. El administrador de Django se utiliza para gestionar y mantener los datos de la aplicación. Es una aplicación de Django que se utiliza para gestionar y mantener los datos de la aplicación.
+
+Para crear un usuario administrador, ejecuta el siguiente comando:
+
+`py manage.py createsuperuser`
+
+```console
+(venv-3.10.11) D:\....aves-testDjango\testDjango>py manage.py createsuperuser
+Username (leave blank to use 'fernando'): admin
+←[31;1mError: That username is already taken.
+←[0mUsername (leave blank to use 'fernando'): admin2
+Email address:
+Password:
+Password (again):
+←[31;1mError: Your passwords didn't match.
+←[0mPassword:
+Password (again):
+←[31;1mThe password is too similar to the username.
+This password is too short. It must contain at least 8 characters.
+←[0mBypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
+
+(venv-3.10.11) D:\....aves-testDjango\testDjango>
+```
+
+![Django Admin](./img/015.-SQLITE-Explorer-user.jpg)
+
+## 33.-Registrando un modelo en el Django admin site
+
+- [Django Admin](https://docs.djangoproject.com/en/3.2/ref/contrib/admin/)
+
+Para registrar el modelo `Customer` en el sitio de administración de Django, debes realizar los siguientes pasos:
+
+1. Abre el archivo `admin.py` dentro de la aplicación `newapp`.
+
+2. Importa el modelo `Customer` en el archivo `admin.py`.
+
+3. Registra el modelo `Customer` en el sitio de administración de Django.
+
+```python
+from django.contrib import admin
+from .models import Customer
+
+# Register your models here.
+admin.site.register(Customer)
+``` 
+
+## 34.-Adding data to a model within the Django admin site
+
+- [Django Admin](https://docs.djangoproject.com/en/3.2/ref/contrib/admin/)
+
+![Django Admin](./img/016.-Customers.jpg)
+
+![Django Admin](./img/017.-Customers.jpg)
+
+![Django Admin](./img/018.-Customers.jpg)
+
+![Django Admin](./img/019.-Customers.jpg)
+
+![Django Admin](./img/020.-Customers.jpg)
