@@ -4,4 +4,5 @@ from . import views # importo las vistas de newapp
 
 urlpatterns = [
     path('', views.home),
+    path('addnew/', views.addnew),
 ]

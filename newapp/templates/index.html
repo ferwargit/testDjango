@@ -1,6 +1,10 @@
 <html>
   <body>
     {% comment %} Hello World... {% endcomment %}
-    Hello {{ name }}, my age is {{ age }}.
+
+    {% for value in data %}
+      <p>Hello {{ value.name }}, my age is {{ value.age }} and my mobile is {{ value.mobile }}.</p>
+    {% endfor %}
+
   </body>
 </html>

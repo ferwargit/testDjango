@@ -802,3 +802,349 @@ admin.site.register(Customer)
 ![Django Admin](./img/019.-Customers.jpg)
 
 ![Django Admin](./img/020.-Customers.jpg)
+
+## 35.-Introducing the list data structure
+
+- [Listas](https://docs.python.org/3/tutorial/datastructures.html)
+
+Tuples, List, Dictionary
+
+```python
+Tuple = ()
+List = []
+Dictionary = {}
+```
+
+## 36.-Agregar elementos a una Lista
+
+```python
+# Lista vacia
+lista = []
+
+# Agregar elementos a la lista con append()
+lista.append(1)
+lista.append(2)
+lista.append(3)
+# Imprimir la lista
+print(lista)
+[1, 2, 3]
+# Agregar elementos a la lista con insert()
+lista.insert(0, 0)
+lista.insert(4, 4)
+# Imprimir la lista
+print(lista)
+[0, 1, 2, 3, 4]
+# Agregar elementos a la lista con extend()
+lista.extend([5, 6, 7])
+# Imprimir la lista
+print(lista)
+[0, 1, 2, 3, 4, 5, 6, 7]
+```
+
+## 37.-Remover elementos de una Lista
+
+```python
+shopping_list = ["Milk", "Pasta", "eggs", "spam", "bread", "rice"]
+# Clear() method removes all elements from the list.
+shopping_list.clear()
+print(shopping_list)
+# []
+
+shopping_list2 = ["Milk", "Pasta", "eggs", "spam", "bread", "rice"]
+# pop() method removes the last item from the list.
+shopping_list2.pop(1)
+print(shopping_list2)
+# ['Milk', 'eggs', 'spam', 'bread', 'rice']
+
+shopping_list3 = ["Milk", "Pasta", "eggs", "spam", "bread", "rice"]
+# remove() method removes the specified item from the list.
+shopping_list3.remove("eggs")
+print(shopping_list3)
+# ['Milk', 'Pasta', 'spam', 'bread', 'rice']
+```	
+
+## 38.-Trabajar con listas de Python anidadas
+
+```python
+shopping_list = ["Milk", "Pasta", "eggs", ["spam", "bread"]]
+print(shopping_list[3])
+# ['spam', 'bread']
+
+print(shopping_list[3][1])
+shopping_list[3][0] = "butter"
+# bread
+
+print(shopping_list)
+# ['Milk', 'Pasta', 'eggs', ['butter', 'bread']]
+
+shopping_list2 = ["Milk", "Pasta", "eggs", ["spam", "bread"]]
+shopping_list2.insert(0, "New")
+print(shopping_list2)
+# ['New', 'Milk', 'Pasta', 'eggs', ['spam', 'bread']]
+
+shopping_list3 = ["Milk", "Pasta", "eggs", ["spam", "bread"]]
+shopping_list3[3].insert(0, "butter")
+print(shopping_list3)
+# ['Milk', 'Pasta', 'eggs', ['butter', 'spam', 'bread']]
+
+shopping_list5 = ["Milk", "Pasta", "eggs", ["spam", "bread"]]
+# shopping_list5[3].extend(("New",))
+shopping_list5[3].extend(["New"])
+print(shopping_list5)
+# ['Milk', 'Pasta', 'eggs', ['spam', 'bread', 'New']]
+
+shopping_list6 = ["Milk", "Pasta", "eggs", ["spam", "bread",["Pan", "Leche"]]]
+print(shopping_list6[3][2][1])
+# 'Leche'
+```
+
+## 39.-Segmentación de lista
+
+```python
+x = [0,1,2,3,4,5,6,7,8,9,10]
+# [start:stop]
+print(x[:])
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(x[2:])
+# [2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(x[:5])
+# [0, 1, 2, 3, 4]
+
+# [start:stop:step]
+print(x[::2])
+# [0, 2, 4, 6, 8, 10]
+print(x[-1])
+# 10
+print(x[-4:])
+# [7, 8, 9, 10]
+print(x[:-4])
+# [0, 1, 2, 3, 4, 5, 6]
+
+# slice(start:stop:step)
+y = slice(1,3)
+print(x[y])
+# [1, 2]
+```
+
+## 40.-Devolver todos los datos de una tabla de una base de datos.
+
+El comando py manage.py shell se utiliza para abrir un shell interactivo de Python con el entorno de Django habilitado. Esto significa que puedes ejecutar código e interactuar directamente con los recursos de tu proyecto Django, como modelos, consultas a la base de datos, entre otros
+
+```bash
+py manage.py shell
+```
+
+```bash
+>>> from newapp.models import Customer
+>>> Customer.objects.all()
+<QuerySet [<Customer: Zander>, <Customer: Kelly>, <Customer: Ali>]>
+>>> x = Customer.objects.all()
+>>> x
+<QuerySet [<Customer: Zander>, <Customer: Kelly>, <Customer: Ali>]>
+>>> x[0]
+<Customer: Zander>
+>>> x[0].name
+'Zander'
+>>> x[1].mobile
+12345
+>>>
+```
+
+## 41.-Segmentación de QuerySet
+
+```bash
+>>> Customer.objects.all()
+<QuerySet [<Customer: Zander>, <Customer: Kelly>, <Customer: Ali>]>
+>>>
+>>> Customer.objects.all()[1:]
+<QuerySet [<Customer: Kelly>, <Customer: Ali>]>
+>>> Customer.objects.all()[:2]
+<QuerySet [<Customer: Zander>, <Customer: Kelly>]>
+>>> Customer.objects.all()[1:2]
+<QuerySet [<Customer: Kelly>]>
+>>>
+Use exit() or Ctrl-Z plus Return to exit
+>>> ^Z
+
+now exiting InteractiveConsole...
+(venv-3.10.11) PS D:\....aves-testDjango\testDjango>
+```
+
+## 42.-Introducing Python For Loops
+    
+```python
+x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+
+for  value in x:
+  print(value)
+
+a
+b
+c
+d
+e
+f
+g
+h
+```
+
+```python
+for value in [1, 2, 3, 4, 5, 6, 7, 8]:
+  print(value)
+
+1
+2
+3
+4
+5
+6
+7
+8
+```	
+
+```python
+for value in "Fernando":
+  print(value)
+
+F
+e
+r
+n
+a
+n
+d
+o
+```
+
+## 43.-Bucle a través de un conjunto de consultas de Django (queryset)
+
+En views.py
+
+```python
+from django.shortcuts import render
+from .models import Customer
+
+def home(request):
+    
+    x = Customer.objects.all()
+
+    for value in x:
+        print(value)
+
+    return render(request, 'index.html')
+```
+## 44.-Salida de Django QuerySet a una plantilla
+
+En views.py
+
+```python
+from django.shortcuts import render
+from .models import Customer
+
+def home(request):
+    
+    x = Customer.objects.all()
+
+return render(request, 'index.html', {'data': x})
+```
+
+En index.html
+
+```html
+<html>
+  <body>
+    {% for value in data %}
+      <p>Hello {{ value.name }}, 
+        my age is {{ value.age }} and 
+        my mobile is {{ value.mobile }}.</p>
+    {% endfor %}
+  </body>
+</html>
+```
+
+## 45.-Construyendo un formulario Django a partir de un modelo
+
+En newapp creamos el archivo forms.py
+
+```python
+from django.forms import ModelForm
+from .models import Customer
+
+class CustomerForm(ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['name', 'age', 'mobile']
+```
+
+En views.py
+
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Customer
+from .forms import CustomerForm
+
+def addnew(request):
+    return render(request, 'addnew.html')
+```	
+
+En la carpeta templates creamos el archivo addnew.html
+
+```html
+<html>
+  <body>
+
+    <h1>Add New Customer</h1>
+
+  </body>
+</html>
+```
+
+En urls.py
+
+```python
+from django.urls import path
+from . import views # importo las vistas de newapp
+
+
+urlpatterns = [
+    path('', views.home),
+    path('addnew/', views.addnew),
+]
+```
+
+## 46.-Renderizar un formulario de Django en una plantilla
+
+En views.py
+
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Customer
+from .forms import CustomerForm
+
+def addnew(request):
+
+    formset = CustomerForm()
+
+    return render(request, 'addnew.html', {'formset': formset})
+```
+
+En addnew.html
+
+```html
+<html>
+  <body>
+    <h1>Add New Customer</h1>
+
+    <form method='post'>
+      {{ formset}}
+      <input type='submit' value='Add Customer' />
+    </form>
+
+  </body>
+</html>
+```
+
+![Formulario](./img/021.-Formulario.jpg)
+

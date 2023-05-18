@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs', # activo la documentación del administrador de Django
     'newapp', # activo la aplicación creada
+    'django_extensions', # activo la extensión de Django
 ]
 
 MIDDLEWARE = [
